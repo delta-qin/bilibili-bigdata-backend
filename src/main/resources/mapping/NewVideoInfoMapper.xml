@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deltaqin.bilibili.dao.NewVideoInfoMapper">
+  <resultMap id="BaseResultMap" type="com.deltaqin.bilibili.dataobject.NewVideoInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="av_number" jdbcType="INTEGER" property="avNumber" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="new_count" jdbcType="INTEGER" property="newCount" />
+    <result column="partition_id" jdbcType="INTEGER" property="partitionId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, av_number, name, new_count, partition_id
+  </sql>
+  <select id="selectByExample" parameterType="com.deltaqin.bilibili.dataobject.NewVideoInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from new_video_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from new_video_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from new_video_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.deltaqin.bilibili.dataobject.NewVideoInfoExample">
+    delete from new_video_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.deltaqin.bilibili.dataobject.NewVideoInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into new_video_info (av_number, name, new_count, 
+      partition_id)
+    values (#{avNumber,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{newCount,jdbcType=INTEGER}, 
+      #{partitionId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deltaqin.bilibili.dataobject.NewVideoInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into new_video_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="avNumber != null">
+        av_number,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="newCount != null">
+        new_count,
+      </if>
+      <if test="partitionId != null">
+        partition_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="avNumber != null">
+        #{avNumber,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="newCount != null">
+        #{newCount,jdbcType=INTEGER},
+      </if>
+      <if test="partitionId != null">
+        #{partitionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.deltaqin.bilibili.dataobject.NewVideoInfoExample" resultType="java.lang.Long">
+    select count(*) from new_video_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update new_video_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.avNumber != null">
+        av_number = #{record.avNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newCount != null">
+        new_count = #{record.newCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.partitionId != null">
+        partition_id = #{record.partitionId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update new_video_info
+    set id = #{record.id,jdbcType=INTEGER},
+      av_number = #{record.avNumber,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      new_count = #{record.newCount,jdbcType=INTEGER},
+      partition_id = #{record.partitionId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deltaqin.bilibili.dataobject.NewVideoInfo">
+    update new_video_info
+    <set>
+      <if test="avNumber != null">
+        av_number = #{avNumber,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="newCount != null">
+        new_count = #{newCount,jdbcType=INTEGER},
+      </if>
+      <if test="partitionId != null">
+        partition_id = #{partitionId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deltaqin.bilibili.dataobject.NewVideoInfo">
+    update new_video_info
+    set av_number = #{avNumber,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      new_count = #{newCount,jdbcType=INTEGER},
+      partition_id = #{partitionId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
