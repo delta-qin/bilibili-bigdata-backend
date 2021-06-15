@@ -41,22 +41,27 @@ qinzetao 分支为开发人员自己的工作分支，用于开发自己的功�
 
 ## 流程命令演示
 ```
+#初始确保在自己分支下，未在则git checkout liutongyuan
 git branch -a
 # 执行上面确保自己在自己的工作分支
 # 一定要在自己的分支下面开发
 git add .  # 添加所有的修改到stage
+git commit -m "lty分支已修改" 
 
 # 后面修改为自己工作分支的名字
 git pull origin dev:dev
 git merge dev
+
+#无冲突下三句不用执行
 git diff
 # 修复冲突之后
 git add .
-git commit -m "登录前后端对接完成" 
+git commit -m "冲突修复" 
 
 # 切换到dev分支
 git checkout dev
-git merge qinzetao
+git merge liutongyuan
 git push origin dev:dev
-git push origin qinzetao:qinzetao
+git push origin liutongyuan:liutongyuan
+git checkout liutongyuan
 ```
