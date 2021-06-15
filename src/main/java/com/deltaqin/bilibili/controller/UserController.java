@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static com.deltaqin.bilibili.common.constant.GlobalConstant.CONTENT_TYPE_FORMED;
+//import static com.deltaqin.bilibili.common.constant.GlobalConstant.CONTENT_TYPE_FORMED;
 
 /**
  * @author deltaqin
@@ -57,21 +57,24 @@ public class UserController {
      * @return
      * @throws CommonExceptionImpl
      */
-    @ApiOperation(value = "用户登录测试接口", notes = "登录接口")
-    @RequestMapping(value = "/login", method = RequestMethod.POST,consumes={CONTENT_TYPE_FORMED})
+    @ApiOperation(value = "用户登录测试接口", notes = "登录接口,将返回的token设置为全局参数")
+    //@RequestMapping(value = "/login", method = RequestMethod.POST,consumes={CONTENT_TYPE_FORMED})
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultType login(@RequestParam(name = "name") String name,
-                            @RequestParam(name = "password") String password,
-                            @RequestParam(name = "code")String code ) throws CommonExceptionImpl, UnsupportedEncodingException, NoSuchAlgorithmException {
+                            @RequestParam(name = "password") String password
+                            //@RequestParam(name = "code")String code
+    ) throws CommonExceptionImpl, UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (StringUtils.isEmpty(name) || StringUtils.isEmpty(password)) {
             throw new CommonExceptionImpl(ExceptionTypeEnum.USER_LOGIN_FAIL);
         }
 
-        String codeInSession = (String)httpServletRequest.getSession().getAttribute(name);
-        code = code.toUpperCase();
-        if (StringUtils.equals(codeInSession, code)) {
-            throw new CommonExceptionImpl(ExceptionTypeEnum.PARAMETER_VALIDATION_ERROR, "验证码错误");
-        }
+        //String codeInSession = (String)httpServletRequest.getSession().getAttribute(name);
+        //String codeInRedis = (String)redisTemplate.opsForValue().get(name);
+        //code = code.toUpperCase();
+        //if (!StringUtils.equals(codeInRedis, code)) {
+        //    throw new CommonExceptionImpl(ExceptionTypeEnum.PARAMETER_VALIDATION_ERROR, "验证码错误");
+        //}
 
         UserModel userModel = userService.login(name, Encode.encodeByMd5(password));
 
@@ -94,7 +97,8 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户注册测试接口", notes = "注册接口")
-    @RequestMapping(path = "/register",method = RequestMethod.POST, consumes = CONTENT_TYPE_FORMED)
+    @RequestMapping(path = "/register",method = RequestMethod.POST)
+    //@RequestMapping(path = "/register",method = RequestMethod.POST, consumes = CONTENT_TYPE_FORMED)
     public ResultType register(@RequestParam(name = "name") String name,
                                @RequestParam(name = "password") String password
     ) throws CommonExceptionImpl, UnsupportedEncodingException, NoSuchAlgorithmException {
@@ -106,21 +110,19 @@ public class UserController {
         return ResultType.create(null);
     }
 
-    // 获取验证码是用session实现的，登录之后使用token实现
-    @ApiOperation(value = "登录之前先获取验证码", notes = "使用返回的验证码登录。图片显示在用户登录页面")
+    @ApiOperation(value = "登录之前先获取验证码(5min过期）", notes = "使用返回的验证码登录。图片显示在用户登录页面")
     // produces = "image/jpeg" 不设置就是乱码
-    @RequestMapping(value = "/getotp",method = {RequestMethod.GET},consumes={CONTENT_TYPE_FORMED}, produces = "image/jpeg")
-    public void getOtpCode(@RequestParam(name = "telphone") String telphone, HttpServletResponse httpServletResponse) throws CommonExceptionImpl {
-        //Random random = new Random();
-        //int randomInt = random.nextInt(99999);
-        //randomInt += 100000;
-        //String otpCode = String.valueOf(randomInt);
+    //@RequestMapping(value = "/getotp",method = {RequestMethod.GET},consumes={CONTENT_TYPE_FORMED}, produces = "image/jpeg")
+    @RequestMapping(value = "/getotp",method = {RequestMethod.GET}, produces = "image/jpeg")
+    public void getOtpCode(@RequestParam(name = "name") String name, HttpServletResponse httpServletResponse) throws CommonExceptionImpl {
 
         // 返回验证码的图片
         Map<String,Object> map = CodeUtil.generateCodeAndPic();
 
-        log.info("telphone:" + telphone + ", otpCode:" + map.get("code"));
-        httpServletRequest.getSession().setAttribute(telphone, map.get("code"));
+        log.info("telphone:" + name + ", otpCode:" + map.get("code"));
+        //
+        redisTemplate.opsForValue().set(name, map.get("code"));
+        redisTemplate.expire(name, 5, TimeUnit.MINUTES);
 
         try {
             // 不设置这knife4j就是下载文件
@@ -128,8 +130,6 @@ public class UserController {
             ImageIO.write((RenderedImage) map.get("pic"), "jpeg", httpServletResponse.getOutputStream());
         } catch (IOException ioException) {
             throw new CommonExceptionImpl(ExceptionTypeEnum.PARAMETER_VALIDATION_ERROR, "验证码图片生成错误");
-        } finally {
-
         }
     }
 

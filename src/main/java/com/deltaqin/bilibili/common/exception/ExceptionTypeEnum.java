@@ -12,6 +12,7 @@ public enum ExceptionTypeEnum implements CommonException {
     USER_NOT_EXIST(50001, "用户不存在"),
     USER_LOGIN_FAIL(50002, "用户手机号或者密码不正确"),
     USER_NOT_LOGIN(50003, "用户还未登录"),
+    USER_HAS_REGISTER(50004, "用户已经注册"),
 
     ;
 

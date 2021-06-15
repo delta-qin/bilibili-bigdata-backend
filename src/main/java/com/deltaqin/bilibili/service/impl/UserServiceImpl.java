@@ -70,7 +70,11 @@ public class UserServiceImpl implements UserService {
         UserInfo userInfo = convertUserFromModel(userModel);
 
         try {
-            userInfoMapper.insert(userInfo);
+            int insert = userInfoMapper.insert(userInfo);
+            // 重复用户直接返回异常
+            if (insert < 1) {
+                throw new CommonExceptionImpl(ExceptionTypeEnum.USER_HAS_REGISTER);
+            }
         } catch (DuplicateKeyException exception) {
             throw new CommonExceptionImpl(ExceptionTypeEnum.PARAMETER_VALIDATION_ERROR, "手机号已经注册");
         }
