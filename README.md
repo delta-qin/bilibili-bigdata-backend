@@ -41,6 +41,7 @@ qinzetao 分支为开发人员自己的工作分支，用于开发自己的功�
 
 ## 流程命令演示
 ```
+set https_proxy=http://127.0.0.1:10080
 #初始确保在自己分支下，未在则git checkout liutongyuan
 git branch -a
 # 执行上面确保自己在自己的工作分支
@@ -65,3 +66,4 @@ git push origin dev:dev
 git push origin liutongyuan:liutongyuan
 git checkout liutongyuan
 ```
+
