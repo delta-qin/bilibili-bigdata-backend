@@ -18,6 +18,30 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+
+//
+//<update id="updateByPrimaryKeySelective" parameterType="com.deltaqin.bilibili.dataobject.UserInfo">
+//        update user_info
+//<set>
+//<if test="name != null">
+//        name = #{name,jdbcType=VARCHAR},
+//</if>
+//<if test="password != null">
+//        password = #{password,jdbcType=VARCHAR},
+//</if>
+//<if test="registerTime != null">
+//        register_time = #{registerTime,jdbcType=TIMESTAMP},
+//</if>
+//</set>
+//        where id = #{id,jdbcType=INTEGER}
+//</update>
+//<update id="updateByPrimaryKey" parameterType="com.deltaqin.bilibili.dataobject.UserInfo">
+//        update user_info
+//        set name = #{name,jdbcType=VARCHAR},
+//        password = #{password,jdbcType=VARCHAR},
+//        register_time = #{registerTime,jdbcType=TIMESTAMP}
+//        where id = #{id,jdbcType=INTEGER}
+//</update>
 /**
  * @author deltaqin
  * @date 2021/6/13 上午11:17

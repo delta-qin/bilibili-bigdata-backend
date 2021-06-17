@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * @author deltaqin
  * @date 2021/6/13 上午11:17
  */
-@RestController("user")
+@RestController("/user")
 //解决跨域
 @CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
 @Api(tags = "用户接口")

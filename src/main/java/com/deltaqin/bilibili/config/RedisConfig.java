@@ -5,7 +5,9 @@ import com.deltaqin.bilibili.common.serializer.JodaDateTimeJsonDeserializer;
 import com.deltaqin.bilibili.common.serializer.JodaDateTimeJsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import lombok.Data;
 import org.joda.time.DateTime;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,7 +23,15 @@ import org.springframework.stereotype.Component;
 // 过期时间1个小时
 @Component
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600)
+@ConfigurationProperties(prefix = "spring.redis")
+@Data
 public class RedisConfig {
+
+    private String host;
+    private int port;
+    private int timeout;//秒
+    private int database;
+    private String password;
 
     // 封装Redis工具，设置自定义序列化方式
     // 参考自动配置类的方式
