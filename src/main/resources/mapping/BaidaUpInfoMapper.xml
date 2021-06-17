@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deltaqin.bilibili.dao.BaidaUpInfoMapper">
+  <resultMap id="BaseResultMap" type="com.deltaqin.bilibili.dataobject.BaidaUpInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="mid" jdbcType="BIGINT" property="mid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="face" jdbcType="VARCHAR" property="face" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="archive_view" jdbcType="BIGINT" property="archiveView" />
+    <result column="article_view" jdbcType="BIGINT" property="articleView" />
+    <result column="likes" jdbcType="BIGINT" property="likes" />
+    <result column="following" jdbcType="BIGINT" property="following" />
+    <result column="follower" jdbcType="BIGINT" property="follower" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, mid, name, sex, face, sign, level, birthday, archive_view, article_view,
+    likes, following, follower
+  </sql>
+  <select id="selectByExample" parameterType="com.deltaqin.bilibili.dataobject.BaidaUpInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from baida_up_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from baida_up_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from baida_up_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.deltaqin.bilibili.dataobject.BaidaUpInfoExample">
+    delete from baida_up_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.deltaqin.bilibili.dataobject.BaidaUpInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into baida_up_info (create_time, mid, name,
+      sex, face, sign, level,
+      birthday, archive_view, article_view,
+      likes, following, follower
+      )
+    values (#{createTime,jdbcType=TIMESTAMP}, #{mid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+      #{sex,jdbcType=VARCHAR}, #{face,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER},
+      #{birthday,jdbcType=VARCHAR}, #{archiveView,jdbcType=BIGINT}, #{articleView,jdbcType=BIGINT},
+      #{likes,jdbcType=BIGINT}, #{following,jdbcType=BIGINT}, #{follower,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.deltaqin.bilibili.dataobject.BaidaUpInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into baida_up_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="mid != null">
+        mid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="face != null">
+        face,
+      </if>
+      <if test="sign != null">
+        sign,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="archiveView != null">
+        archive_view,
+      </if>
+      <if test="articleView != null">
+        article_view,
+      </if>
+      <if test="likes != null">
+        likes,
+      </if>
+      <if test="following != null">
+        following,
+      </if>
+      <if test="follower != null">
+        follower,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mid != null">
+        #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="face != null">
+        #{face,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null">
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveView != null">
+        #{archiveView,jdbcType=BIGINT},
+      </if>
+      <if test="articleView != null">
+        #{articleView,jdbcType=BIGINT},
+      </if>
+      <if test="likes != null">
+        #{likes,jdbcType=BIGINT},
+      </if>
+      <if test="following != null">
+        #{following,jdbcType=BIGINT},
+      </if>
+      <if test="follower != null">
+        #{follower,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.deltaqin.bilibili.dataobject.BaidaUpInfoExample" resultType="java.lang.Long">
+    select count(*) from baida_up_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <select id="getUpSexNum" resultType="java.util.HashMap">
+      SELECT count(sex) as `count`,sex
+      FROM baida_up_info
+      GROUP BY sex;
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+    update baida_up_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mid != null">
+        mid = #{record.mid,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.face != null">
+        face = #{record.face,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sign != null">
+        sign = #{record.sign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null">
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.archiveView != null">
+        archive_view = #{record.archiveView,jdbcType=BIGINT},
+      </if>
+      <if test="record.articleView != null">
+        article_view = #{record.articleView,jdbcType=BIGINT},
+      </if>
+      <if test="record.likes != null">
+        likes = #{record.likes,jdbcType=BIGINT},
+      </if>
+      <if test="record.following != null">
+        following = #{record.following,jdbcType=BIGINT},
+      </if>
+      <if test="record.follower != null">
+        follower = #{record.follower,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update baida_up_info
+    set id = #{record.id,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      mid = #{record.mid,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      face = #{record.face,jdbcType=VARCHAR},
+      sign = #{record.sign,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=INTEGER},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      archive_view = #{record.archiveView,jdbcType=BIGINT},
+      article_view = #{record.articleView,jdbcType=BIGINT},
+      likes = #{record.likes,jdbcType=BIGINT},
+      following = #{record.following,jdbcType=BIGINT},
+      follower = #{record.follower,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deltaqin.bilibili.dataobject.BaidaUpInfo">
+    update baida_up_info
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mid != null">
+        mid = #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="face != null">
+        face = #{face,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null">
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveView != null">
+        archive_view = #{archiveView,jdbcType=BIGINT},
+      </if>
+      <if test="articleView != null">
+        article_view = #{articleView,jdbcType=BIGINT},
+      </if>
+      <if test="likes != null">
+        likes = #{likes,jdbcType=BIGINT},
+      </if>
+      <if test="following != null">
+        following = #{following,jdbcType=BIGINT},
+      </if>
+      <if test="follower != null">
+        follower = #{follower,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deltaqin.bilibili.dataobject.BaidaUpInfo">
+    update baida_up_info
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      mid = #{mid,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      face = #{face,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      archive_view = #{archiveView,jdbcType=BIGINT},
+      article_view = #{articleView,jdbcType=BIGINT},
+      likes = #{likes,jdbcType=BIGINT},
+      following = #{following,jdbcType=BIGINT},
+      follower = #{follower,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
