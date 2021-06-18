@@ -33,10 +33,10 @@ public class C02_FenQuChartController extends BaseController{
     public ResultType getFenquTopN(@RequestParam Integer tid,@RequestParam int N) {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String, Object>>  res = null;
-        res = redisService.getListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getFenquTopN" , Object.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getFenquTopN"+tid+"_"+N , Object.class);
         if (res == null){
             res = fenQuChartService.getFenquTopN(tid, N);
-            redisService.setListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getFenquTopN", res);
+            redisService.setListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getFenquTopN"+tid+"_"+N, res);
         }
         return ResultType.create(res);
     }

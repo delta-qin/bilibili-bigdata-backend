@@ -2,12 +2,15 @@ package com.deltaqin.bilibili.redis.jedis;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.deltaqin.bilibili.redis.prefix.KeyPrefix;
 import com.deltaqin.bilibili.vo.VideosTopnInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.ScanParams;
@@ -92,14 +95,14 @@ public class RedisService {
 
     }
 
-    public <T>List<HashMap<String, T>>  getListWithHashMap(KeyPrefix keyPrefix, String key, T clazz) {
+    public  List<HashMap<String, Object>>  getListWithHashMap(KeyPrefix keyPrefix, String key, Object clazz) {
 
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
             String realKey = keyPrefix.getPrefix() + key;
             String res = jedis.get(realKey);
-            List<HashMap<String, T>> maps = toListMap(res);
+            List<HashMap<String, Object>> maps = toListMap(res);
             return maps;
         } finally {
             returnToPool(jedis);
@@ -107,14 +110,18 @@ public class RedisService {
     }
 
 
-    public static <T>List<HashMap<String, T>> toListMap(String json){
-        List<T> list =(List<T>)JSON.parseArray(json);
+    public static  List<HashMap<String, Object>> toListMap(String json){
+        if (StringUtils.isEmpty(json)) return null;
+        JSONArray list = JSON.parseArray(json);
 
-        List< HashMap<String,T>> listw = new ArrayList<>();
-        for (T object : list){
+
+        List< HashMap<String,Object>> listw = new ArrayList<>();
+        for (Object object : list){
             //Map<String,Object> ageMap = new HashMap<>();
-            HashMap <String,T> ret = (HashMap<String, T>) object;//取出list里面的值转为map
-            listw.add(ret);
+            JSONObject object1 = (JSONObject) object;
+            Map<String, Object> innerMap = object1.getInnerMap();
+            //HashMap <String,Object> ret = (HashMap<String, Object>) object;//取出list里面的值转为map
+            listw.add((HashMap<String, Object>) innerMap);
         }
         return listw;
 

@@ -13,8 +13,6 @@ public class AllKeyPrefix extends BaseKeyPrefix {
         super(prefix, expire);
     }
 
-    public static final String GET_TOP5_THREE = "getTop5Three";
-
     public static AllKeyPrefix getBaidaUpInfo = new AllKeyPrefix(3600 * 36, "baida_up_info");
     public static AllKeyPrefix getBaidaVideoTopnInfo = new AllKeyPrefix(3600 * 36, "baida_video_topn_info");
     public static AllKeyPrefix getColumnTypeInfo = new AllKeyPrefix(3600 * 36, "column_type_info");

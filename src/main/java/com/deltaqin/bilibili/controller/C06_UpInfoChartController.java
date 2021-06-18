@@ -44,10 +44,10 @@ public class C06_UpInfoChartController extends BaseController {
     public ResultType getUpVideoTopN(@RequestParam int N) {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String,Object>> res = null;
-        res = redisService.getListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getUpVideoTopN", Object.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getUpVideoTopN"+N, Object.class);
         if (res == null){
             res = upInfoChartService.getUpVideoTopN(N);
-            redisService.setListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getUpVideoTopN", res);
+            redisService.setListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getUpVideoTopN"+N, res);
         }
         return ResultType.create(res);
     }
@@ -58,10 +58,10 @@ public class C06_UpInfoChartController extends BaseController {
     public ResultType getAllVideoTopN(@RequestParam int N) {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String,Object>> res = null;
-        res = redisService.getListWithHashMap(AllKeyPrefix.getBaidaUpInfo,  "getAllVideoTopN", Object.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getBaidaUpInfo,  "getAllVideoTopN"+N, Object.class);
         if (res == null){
             res = upInfoChartService.getAllVideoTopN(N);
-            redisService.setListWithHashMap(AllKeyPrefix.getBaidaUpInfo,  "getAllVideoTopN", res);
+            redisService.setListWithHashMap(AllKeyPrefix.getBaidaUpInfo,  "getAllVideoTopN"+N, res);
         }
         return ResultType.create(res);
     }

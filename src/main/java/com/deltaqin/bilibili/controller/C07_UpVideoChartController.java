@@ -56,10 +56,10 @@ public class C07_UpVideoChartController extends BaseController{
     public ResultType getHundredTopN(@RequestParam Integer N) {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String, Object>> res = null;
-        res = redisService.getListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getHundredTopN", Object.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getHundredTopN"+N, Object.class);
         if (res == null){
             res = upVideoChartService.getHundredTopN(N);
-            redisService.setListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getHundredTopN", res);
+            redisService.setListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getHundredTopN"+N, res);
         }
         return ResultType.create(res);
     }
