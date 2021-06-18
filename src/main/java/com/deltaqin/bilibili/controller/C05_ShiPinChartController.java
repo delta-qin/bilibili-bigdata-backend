@@ -24,19 +24,19 @@ import java.util.List;
 @CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
 @Api(tags = "05视频新增")
 @Slf4j
-public class C05_ShiPinChartController extends BaseController{
+public class C05_ShiPinChartController extends BaseController {
 
     @Autowired
     private C05_ShiPinChartService shiPinChartService;
 
-//    （1）分区视频新增：所有分区视频当日新增数统计（条形） [video_info]
+    //    （1）分区视频新增：所有分区视频当日新增数统计（条形） [video_info]
     @ApiOperation(value = " （1）分区视频新增：所有分区视频当日新增数统计（条形） [video_info]", notes = "")
     @RequestMapping(value = "/video/fenqu/allnum", method = RequestMethod.GET)
     public ResultType getFenquAllToday() {
         //List<VideosTopnInfoVo> res = null;
-        List<HashMap<String,Object>> res = null;
+        List<HashMap<String, Object>> res = null;
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
-        if (res == null){
+        if (res == null) {
             res = shiPinChartService.getFenquAllToday();
             redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
         }

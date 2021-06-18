@@ -19,7 +19,6 @@ public class C05_ShiPinChartServiceImpl implements C05_ShiPinChartService {
     private VideosInfoMapper videosInfoMapper;
 
 
-
     @Override
     public List<HashMap<String, Object>> getFenquAllToday() {
 

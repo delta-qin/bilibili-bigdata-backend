@@ -1,366 +1,357 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deltaqin.bilibili.dao.ColumnsInfoMapper">
-  <resultMap id="BaseResultMap" type="com.deltaqin.bilibili.dataobject.ColumnsInfo">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="cid" jdbcType="BIGINT" property="cid" />
-    <result column="count" jdbcType="INTEGER" property="count" />
-    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
-    <result column="view" jdbcType="BIGINT" property="view" />
-    <result column="favorite" jdbcType="BIGINT" property="favorite" />
-    <result column="like" jdbcType="BIGINT" property="like" />
-    <result column="dislike" jdbcType="BIGINT" property="dislike" />
-    <result column="reply" jdbcType="BIGINT" property="reply" />
-    <result column="share" jdbcType="BIGINT" property="share" />
-    <result column="coin" jdbcType="BIGINT" property="coin" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.deltaqin.bilibili.dataobject.ColumnsInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="cid" jdbcType="BIGINT" property="cid"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime"/>
+        <result column="view" jdbcType="BIGINT" property="view"/>
+        <result column="favorite" jdbcType="BIGINT" property="favorite"/>
+        <result column="like" jdbcType="BIGINT" property="like"/>
+        <result column="dislike" jdbcType="BIGINT" property="dislike"/>
+        <result column="reply" jdbcType="BIGINT" property="reply"/>
+        <result column="share" jdbcType="BIGINT" property="share"/>
+        <result column="coin" jdbcType="BIGINT" property="coin"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, cid, count, publish_time, view, favorite, like, dislike, reply, share, coin,
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id
+        , cid, count, publish_time, view, favorite, like, dislike, reply, share, coin,
     create_time
-  </sql>
-  <select id="selectByExample" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfoExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from columns_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from columns_info
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from columns_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfoExample">
-    delete from columns_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfo">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into columns_info (cid, count, publish_time,
-      view, favorite, like,
-      dislike, reply, share,
-      coin, create_time)
-    values (#{cid,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP},
-      #{view,jdbcType=BIGINT}, #{favorite,jdbcType=BIGINT}, #{like,jdbcType=BIGINT},
-      #{dislike,jdbcType=BIGINT}, #{reply,jdbcType=BIGINT}, #{share,jdbcType=BIGINT},
-      #{coin,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfo">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into columns_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
-        cid,
-      </if>
-      <if test="count != null">
-        count,
-      </if>
-      <if test="publishTime != null">
-        publish_time,
-      </if>
-      <if test="view != null">
-        view,
-      </if>
-      <if test="favorite != null">
-        favorite,
-      </if>
-      <if test="like != null">
-        like,
-      </if>
-      <if test="dislike != null">
-        dislike,
-      </if>
-      <if test="reply != null">
-        reply,
-      </if>
-      <if test="share != null">
-        share,
-      </if>
-      <if test="coin != null">
-        coin,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
-        #{cid,jdbcType=BIGINT},
-      </if>
-      <if test="count != null">
-        #{count,jdbcType=INTEGER},
-      </if>
-      <if test="publishTime != null">
-        #{publishTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="view != null">
-        #{view,jdbcType=BIGINT},
-      </if>
-      <if test="favorite != null">
-        #{favorite,jdbcType=BIGINT},
-      </if>
-      <if test="like != null">
-        #{like,jdbcType=BIGINT},
-      </if>
-      <if test="dislike != null">
-        #{dislike,jdbcType=BIGINT},
-      </if>
-      <if test="reply != null">
-        #{reply,jdbcType=BIGINT},
-      </if>
-      <if test="share != null">
-        #{share,jdbcType=BIGINT},
-      </if>
-      <if test="coin != null">
-        #{coin,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfoExample" resultType="java.lang.Long">
-    select count(*) from columns_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <select id="getZhuanLanTotal" resultType="java.lang.Long">
-      SELECT SUM(`count`) as total
+    </sql>
+    <select id="selectByExample" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfoExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from columns_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from columns_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from columns_info
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfoExample">
+        delete from columns_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into columns_info (cid, count, publish_time,
+        view, favorite, like,
+        dislike, reply, share,
+        coin, create_time)
+        values (#{cid,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP},
+        #{view,jdbcType=BIGINT}, #{favorite,jdbcType=BIGINT}, #{like,jdbcType=BIGINT},
+        #{dislike,jdbcType=BIGINT}, #{reply,jdbcType=BIGINT}, #{share,jdbcType=BIGINT},
+        #{coin,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into columns_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="count != null">
+                count,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="view != null">
+                view,
+            </if>
+            <if test="favorite != null">
+                favorite,
+            </if>
+            <if test="like != null">
+                like,
+            </if>
+            <if test="dislike != null">
+                dislike,
+            </if>
+            <if test="reply != null">
+                reply,
+            </if>
+            <if test="share != null">
+                share,
+            </if>
+            <if test="coin != null">
+                coin,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cid != null">
+                #{cid,jdbcType=BIGINT},
+            </if>
+            <if test="count != null">
+                #{count,jdbcType=INTEGER},
+            </if>
+            <if test="publishTime != null">
+                #{publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="view != null">
+                #{view,jdbcType=BIGINT},
+            </if>
+            <if test="favorite != null">
+                #{favorite,jdbcType=BIGINT},
+            </if>
+            <if test="like != null">
+                #{like,jdbcType=BIGINT},
+            </if>
+            <if test="dislike != null">
+                #{dislike,jdbcType=BIGINT},
+            </if>
+            <if test="reply != null">
+                #{reply,jdbcType=BIGINT},
+            </if>
+            <if test="share != null">
+                #{share,jdbcType=BIGINT},
+            </if>
+            <if test="coin != null">
+                #{coin,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfoExample"
+            resultType="java.lang.Long">
+        select count(*) from columns_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <select id="getZhuanLanTotal" resultType="java.lang.Long">
+        SELECT SUM(`count`) as total
         FROM columns_info
     </select>
     <select id="getSelectZhuanLanTotal" resultType="java.lang.Long">
-      SELECT SUM(`count`) as total
+        SELECT SUM(`count`) as total
         FROM columns_info
         where cid = #{tid}
     </select>
-  <select id="getNewIn14Day" resultType="java.lang.Long">
-    SELECT SUM(`count`) as total
-    FROM columns_info
-    where DATE_SUB(CURDATE(), INTERVAL 10 DAY) <![CDATA[<=]]>
-    date(publish_time)
-</select>
-  <select id="getZhuanLanNew7day" resultType="java.util.HashMap">
-    SELECT publish_time, `count`
-    FROM columns_info
-    where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[<=]]> date(publish_time)
-    AND cid = #{tid}
-    ORDER BY publish_time
-  </select>
-  <select id="getFenquAllNum" resultType="java.util.HashMap">
-    SELECT  b.name as name, SUM(a.`like`) as `like`, SUM(a.coin) as coin,SUM(a.`favorite`)  as `favorite`
-    from columns_info as a
-    INNER JOIN
-    column_type_info as b
-    on a.cid = b.id
-    GROUP By a.cid,b.name
-  </select>
-
-  <select id="getFenquAllToday" resultType="java.util.HashMap">
-    SELECT a.*, b.`name` as `name`
-    FROM (videos_info a
-      INNER JOIN
-      video_type_info as b
-      on a.tid = b.id)
-           INNER JOIN (
-      SELECT MAX(pubdate) as pubdate,tid
-      FROM videos_info
-      GROUP BY tid
-    ) as c
-    on a.pubdate = c.pubdate AND a.tid = c.tid
-  </select>
-
-  <update id="updateByExampleSelective" parameterType="map">
-    update columns_info
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.cid != null">
+    <select id="getNewIn14Day" resultType="java.lang.Long">
+        SELECT SUM(`count`) as total
+        FROM columns_info
+        where DATE_SUB(CURDATE(), INTERVAL 14 DAY) <![CDATA[<=]]>
+            date (publish_time)
+    </select>
+    <select id="getZhuanLanNew7day" resultType="java.util.HashMap">
+        SELECT publish_time, `count`
+        FROM columns_info
+        where cid = #{tid}
+        ORDER BY publish_time
+        LIMIT 0,7
+    </select>
+    <select id="getFenquAllNum" resultType="java.util.HashMap">
+        SELECT b.name as name, SUM(a.`like`) as `like`, SUM(a.coin) as coin, SUM(a.`favorite`) as `favorite`
+        from columns_info as a
+                 INNER JOIN
+             column_type_info as b
+             on a.cid = b.id
+        GROUP By a.cid, b.name
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update columns_info
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.cid != null">
+                cid = #{record.cid,jdbcType=BIGINT},
+            </if>
+            <if test="record.count != null">
+                count = #{record.count,jdbcType=INTEGER},
+            </if>
+            <if test="record.publishTime != null">
+                publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.view != null">
+                view = #{record.view,jdbcType=BIGINT},
+            </if>
+            <if test="record.favorite != null">
+                favorite = #{record.favorite,jdbcType=BIGINT},
+            </if>
+            <if test="record.like != null">
+                like = #{record.like,jdbcType=BIGINT},
+            </if>
+            <if test="record.dislike != null">
+                dislike = #{record.dislike,jdbcType=BIGINT},
+            </if>
+            <if test="record.reply != null">
+                reply = #{record.reply,jdbcType=BIGINT},
+            </if>
+            <if test="record.share != null">
+                share = #{record.share,jdbcType=BIGINT},
+            </if>
+            <if test="record.coin != null">
+                coin = #{record.coin,jdbcType=BIGINT},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update columns_info
+        set id = #{record.id,jdbcType=INTEGER},
         cid = #{record.cid,jdbcType=BIGINT},
-      </if>
-      <if test="record.count != null">
         count = #{record.count,jdbcType=INTEGER},
-      </if>
-      <if test="record.publishTime != null">
         publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.view != null">
         view = #{record.view,jdbcType=BIGINT},
-      </if>
-      <if test="record.favorite != null">
         favorite = #{record.favorite,jdbcType=BIGINT},
-      </if>
-      <if test="record.like != null">
         like = #{record.like,jdbcType=BIGINT},
-      </if>
-      <if test="record.dislike != null">
         dislike = #{record.dislike,jdbcType=BIGINT},
-      </if>
-      <if test="record.reply != null">
         reply = #{record.reply,jdbcType=BIGINT},
-      </if>
-      <if test="record.share != null">
         share = #{record.share,jdbcType=BIGINT},
-      </if>
-      <if test="record.coin != null">
         coin = #{record.coin,jdbcType=BIGINT},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update columns_info
-    set id = #{record.id,jdbcType=INTEGER},
-      cid = #{record.cid,jdbcType=BIGINT},
-      count = #{record.count,jdbcType=INTEGER},
-      publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
-      view = #{record.view,jdbcType=BIGINT},
-      favorite = #{record.favorite,jdbcType=BIGINT},
-      like = #{record.like,jdbcType=BIGINT},
-      dislike = #{record.dislike,jdbcType=BIGINT},
-      reply = #{record.reply,jdbcType=BIGINT},
-      share = #{record.share,jdbcType=BIGINT},
-      coin = #{record.coin,jdbcType=BIGINT},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfo">
-    update columns_info
-    <set>
-      <if test="cid != null">
-        cid = #{cid,jdbcType=BIGINT},
-      </if>
-      <if test="count != null">
-        count = #{count,jdbcType=INTEGER},
-      </if>
-      <if test="publishTime != null">
-        publish_time = #{publishTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="view != null">
-        view = #{view,jdbcType=BIGINT},
-      </if>
-      <if test="favorite != null">
-        favorite = #{favorite,jdbcType=BIGINT},
-      </if>
-      <if test="like != null">
-        like = #{like,jdbcType=BIGINT},
-      </if>
-      <if test="dislike != null">
-        dislike = #{dislike,jdbcType=BIGINT},
-      </if>
-      <if test="reply != null">
-        reply = #{reply,jdbcType=BIGINT},
-      </if>
-      <if test="share != null">
-        share = #{share,jdbcType=BIGINT},
-      </if>
-      <if test="coin != null">
-        coin = #{coin,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfo">
-    update columns_info
-    set cid = #{cid,jdbcType=BIGINT},
-      count = #{count,jdbcType=INTEGER},
-      publish_time = #{publishTime,jdbcType=TIMESTAMP},
-      view = #{view,jdbcType=BIGINT},
-      favorite = #{favorite,jdbcType=BIGINT},
-      like = #{like,jdbcType=BIGINT},
-      dislike = #{dislike,jdbcType=BIGINT},
-      reply = #{reply,jdbcType=BIGINT},
-      share = #{share,jdbcType=BIGINT},
-      coin = #{coin,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        create_time = #{record.createTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfo">
+        update columns_info
+        <set>
+            <if test="cid != null">
+                cid = #{cid,jdbcType=BIGINT},
+            </if>
+            <if test="count != null">
+                count = #{count,jdbcType=INTEGER},
+            </if>
+            <if test="publishTime != null">
+                publish_time = #{publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="view != null">
+                view = #{view,jdbcType=BIGINT},
+            </if>
+            <if test="favorite != null">
+                favorite = #{favorite,jdbcType=BIGINT},
+            </if>
+            <if test="like != null">
+                like = #{like,jdbcType=BIGINT},
+            </if>
+            <if test="dislike != null">
+                dislike = #{dislike,jdbcType=BIGINT},
+            </if>
+            <if test="reply != null">
+                reply = #{reply,jdbcType=BIGINT},
+            </if>
+            <if test="share != null">
+                share = #{share,jdbcType=BIGINT},
+            </if>
+            <if test="coin != null">
+                coin = #{coin,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.deltaqin.bilibili.dataobject.ColumnsInfo">
+        update columns_info
+        set cid          = #{cid,jdbcType=BIGINT},
+            count        = #{count,jdbcType=INTEGER},
+            publish_time = #{publishTime,jdbcType=TIMESTAMP},
+            view         = #{view,jdbcType=BIGINT},
+            favorite     = #{favorite,jdbcType=BIGINT},
+            like         = #{like,jdbcType=BIGINT},
+            dislike      = #{dislike,jdbcType=BIGINT},
+            reply        = #{reply,jdbcType=BIGINT},
+            share        = #{share,jdbcType=BIGINT},
+            coin         = #{coin,jdbcType=BIGINT},
+            create_time  = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

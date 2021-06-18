@@ -260,14 +260,14 @@
       SELECT
       *
       FROM videos_topn_info
-      ORDER BY `view`
+      ORDER BY `view` DESC
       LIMIT 0,20
   </select>
   <select id="getFenquTopN" resultType="java.util.HashMap">
         SELECT*
         FROM videos_topn_info
         WHERE tid  = #{tid}
-        ORDER BY `view`
+        ORDER BY `view` DESC
         LIMIT 0,#{n}
   </select>
   <select id="getFenquTotal" resultType="java.lang.Long">
