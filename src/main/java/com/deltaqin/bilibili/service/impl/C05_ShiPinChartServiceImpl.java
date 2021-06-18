@@ -1,6 +1,7 @@
 package com.deltaqin.bilibili.service.impl;
 
 import com.deltaqin.bilibili.dao.ColumnsInfoMapper;
+import com.deltaqin.bilibili.dao.VideosInfoMapper;
 import com.deltaqin.bilibili.service.C05_ShiPinChartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,14 @@ import java.util.List;
 @Service
 public class C05_ShiPinChartServiceImpl implements C05_ShiPinChartService {
     @Autowired
-    private ColumnsInfoMapper columnsInfoMapper;
+    private VideosInfoMapper videosInfoMapper;
 
 
 
     @Override
     public List<HashMap<String, Object>> getFenquAllToday() {
 
-        return columnsInfoMapper.getFenquAllToday();
+        return videosInfoMapper.getFenquAllToday();
 
     }
 }

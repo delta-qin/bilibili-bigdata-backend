@@ -39,6 +39,4 @@ public interface ColumnsInfoMapper {
     List<HashMap<String,Object>> getZhuanLanNew7day(@Param("tid") Integer tid);
 
     List<HashMap<String, Object>> getFenquAllNum();
-
-    List<HashMap<String, Object>> getFenquAllToday();
 }
