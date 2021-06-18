@@ -40,7 +40,6 @@ public class C04_ZhuanLanChartController extends BaseController{
     }
 
 
-
     @ApiOperation(value = "（2）指定分区的专栏总数（数字卡片）   [column_info]", notes = "")
     @RequestMapping(value = "/video/zhuanlan/total", method = RequestMethod.GET)
     public ResultType getZhuanLantotal(@RequestParam Integer tid ) {

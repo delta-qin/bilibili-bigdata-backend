@@ -232,15 +232,21 @@
     on a.cid = b.id
     GROUP By a.cid,b.name
   </select>
-  <select id="getFenquAllToday" resultType="java.util.HashMap">
 
+  <select id="getFenquAllToday" resultType="java.util.HashMap">
     SELECT a.*, b.`name` as `name`
-      FROM columns_info a
-    INNER JOIN
-      column_type_info as b
-      on a.cid = b.id
-    WHERE CURDATE() = date(publish_time)
+    FROM (videos_info a
+      INNER JOIN
+      video_type_info as b
+      on a.tid = b.id)
+           INNER JOIN (
+      SELECT MAX(pubdate) as pubdate,tid
+      FROM videos_info
+      GROUP BY tid
+    ) as c
+    on a.pubdate = c.pubdate AND a.tid = c.tid
   </select>
+
   <update id="updateByExampleSelective" parameterType="map">
     update columns_info
     <set>
