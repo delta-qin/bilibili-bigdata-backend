@@ -259,7 +259,7 @@
       SELECT
         *
       FROM columns_topn_info
-      ORDER BY `view`
+      ORDER BY `view` DESC
       LIMIT 0,20
     </select>
   <select id="getZhuanLanFenquTopN" resultType="java.util.HashMap">

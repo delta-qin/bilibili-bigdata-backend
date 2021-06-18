@@ -3,6 +3,8 @@ package com.deltaqin.bilibili.redis.prefix;
 /**
  * 每一类key应该有相同的前缀
  *
+ * 所有的key前缀使用数据库的名字，这样删除的时候可以直接按照前缀删除
+ *
  * @author deltaqin
  * @date 2021/6/14 上午8:33
  */
