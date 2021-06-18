@@ -233,7 +233,7 @@
         SELECT *
         from baida_up_info
         ORDER BY archive_view DESC
-            LIMIT #{n}
+        LIMIT #{n}
     </select>
     <select id="getHundredAllviedo" resultType="java.lang.Long">
         SELECT count(aid) as `count`

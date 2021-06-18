@@ -227,7 +227,7 @@
         SELECT publish_time, `count`
         FROM columns_info
         where cid = #{tid}
-        ORDER BY publish_time
+        ORDER BY publish_time DESC
         LIMIT 0,7
     </select>
     <select id="getFenquAllNum" resultType="java.util.HashMap">

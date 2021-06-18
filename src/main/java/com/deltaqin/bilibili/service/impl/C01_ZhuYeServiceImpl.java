@@ -62,7 +62,14 @@ public class C01_ZhuYeServiceImpl implements C01_ZhuYeService {
             item.put("score", DoubleUtil.userBigDecimal(score));
         });
 
-        return list;
+        list.sort(new Comparator<HashMap<String, Object>>() {
+            @Override
+            public int compare(HashMap<String, Object> o1, HashMap<String, Object> o2) {
+                return (int)((double) o2.get("score") - (double) o1.get("score"));
+            }
+        });
+
+        return list.subList(0,5);
     }
 
     @Override
