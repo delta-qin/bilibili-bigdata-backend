@@ -1,7 +1,7 @@
 package com.deltaqin.bilibili.controller;
 
 import com.deltaqin.bilibili.common.entities.ResultType;
-import com.deltaqin.bilibili.redis.prefix.VideoKeyPrefix;
+import com.deltaqin.bilibili.redis.prefix.AllKeyPrefix;
 import com.deltaqin.bilibili.service.C04_ZhuanLanChartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +34,7 @@ public class C04_ZhuanLanChartController extends BaseController{
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = zhuanLanChartService.getZhuanLanFenquTop50(tid, N);
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            //redisService.set(VideoTypeInfoKeyPrefix.getHome, VideoTypeInfoKeyPrefix.GET_TOP5_THREE, res);
         }
         return ResultType.create(res);
     }
@@ -49,10 +49,7 @@ public class C04_ZhuanLanChartController extends BaseController{
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = zhuanLanChartService.getZhuanLantotal(tid);
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
-        }
-        if (res == null) {
-
+            //redisService.set(VideoTypeInfoKeyPrefix.getHome, VideoTypeInfoKeyPrefix.GET_TOP5_THREE, res);
         }
         return ResultType.create(res);
     }
@@ -63,9 +60,10 @@ public class C04_ZhuanLanChartController extends BaseController{
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String,Object>>  res = null;
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getColumnsInfo, "getZhuanLanNew7day" , Object.class);
         if (res == null){
             res = zhuanLanChartService.getZhuanLanNew7day(tid);
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            redisService.setListWithHashMap(AllKeyPrefix.getColumnsInfo, "getZhuanLanNew7day" , res);
         }
         return ResultType.create(res);
     }
@@ -76,10 +74,10 @@ public class C04_ZhuanLanChartController extends BaseController{
     public ResultType getFenquAllNum() {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String,Object>>  res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getColumnsInfo,  AllKeyPrefix.getColumnTypeInfo.getPrefix(), Object.class);
         if (res == null){
             res = zhuanLanChartService.getFenquAllNum();
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            redisService.setListWithHashMap(AllKeyPrefix.getColumnsInfo,  AllKeyPrefix.getColumnTypeInfo.getPrefix(), res);
         }
         return ResultType.create(res);
     }

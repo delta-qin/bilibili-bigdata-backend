@@ -1,7 +1,7 @@
 package com.deltaqin.bilibili.controller;
 
 import com.deltaqin.bilibili.common.entities.ResultType;
-import com.deltaqin.bilibili.redis.prefix.VideoKeyPrefix;
+import com.deltaqin.bilibili.redis.prefix.AllKeyPrefix;
 import com.deltaqin.bilibili.service.C07_UpVideoChartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,10 +31,8 @@ public class C07_UpVideoChartController extends BaseController{
     public ResultType getHundredAllviedo() {
         //List<VideosTopnInfoVo> res = null;
         Long res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = upVideoChartService.getHundredAllviedo();
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
         }
         return ResultType.create(res);
     }
@@ -45,10 +43,10 @@ public class C07_UpVideoChartController extends BaseController{
     public ResultType getHundredPercent() {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String, Object>> res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getHundredPercent", Object.class);
         if (res == null){
             res = upVideoChartService.getHundredPercent();
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            redisService.setListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getHundredPercent", res);
         }
         return ResultType.create(res);
     }
@@ -58,10 +56,10 @@ public class C07_UpVideoChartController extends BaseController{
     public ResultType getHundredTopN(@RequestParam Integer N) {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String, Object>> res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getHundredTopN", Object.class);
         if (res == null){
             res = upVideoChartService.getHundredTopN(N);
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            redisService.setListWithHashMap(AllKeyPrefix.getBaidaVideoTopnInfo,  "getHundredTopN", res);
         }
         return ResultType.create(res);
     }

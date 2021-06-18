@@ -1,21 +1,16 @@
 package com.deltaqin.bilibili.controller;
 
 import com.deltaqin.bilibili.common.entities.ResultType;
-import com.deltaqin.bilibili.model.VideosTopnInfoModel;
-import com.deltaqin.bilibili.redis.prefix.VideoKeyPrefix;
+import com.deltaqin.bilibili.redis.prefix.AllKeyPrefix;
 import com.deltaqin.bilibili.service.C02_FenQuChartService;
-import com.deltaqin.bilibili.vo.VideosTopnInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author deltaqin
@@ -38,10 +33,10 @@ public class C02_FenQuChartController extends BaseController{
     public ResultType getFenquTopN(@RequestParam Integer tid,@RequestParam int N) {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String, Object>>  res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getFenquTopN" , Object.class);
         if (res == null){
             res = fenQuChartService.getFenquTopN(tid, N);
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            redisService.setListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getFenquTopN", res);
         }
         return ResultType.create(res);
     }
@@ -56,7 +51,7 @@ public class C02_FenQuChartController extends BaseController{
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = fenQuChartService.getFenquTotal(tid);
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            //redisService.set(VideoTypeInfoKeyPrefix.getHome, VideoTypeInfoKeyPrefix.GET_TOP5_THREE, res);
         }
         return ResultType.create(res);
     }
@@ -69,7 +64,7 @@ public class C02_FenQuChartController extends BaseController{
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = fenQuChartService.getFenquLeiDa(tid);
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            //redisService.set(VideoTypeInfoKeyPrefix.getHome, VideoTypeInfoKeyPrefix.GET_TOP5_THREE, res);
         }
         return ResultType.create(res);
     }

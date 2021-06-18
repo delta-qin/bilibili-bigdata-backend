@@ -106,12 +106,25 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <!--        mq-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.rocketmq</groupId>-->
-        <!--            <artifactId>rocketmq-client</artifactId>-->
-        <!--            <version>4.3.0</version>-->
-        <!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.rocketmq</groupId>-->
+<!--            <artifactId>rocketmq-client</artifactId>-->
+<!--            <version>4.3.0</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.4</version>
+        </dependency>
 
         <!--         API文档-->
         <dependency>
@@ -119,6 +132,12 @@
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <!--在引用时请在maven中央仓库搜索最新版本号-->
             <version>2.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--         日志：spring默认使用的是logback 实现的-->
@@ -150,6 +169,37 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.38</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.alibaba.otter</groupId>
+            <artifactId>canal.client</artifactId>
+            <version>1.1.4</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>zookeeper</artifactId>
+                    <groupId>org.apache.zookeeper</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-lang3</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>fastjson</artifactId>
+                    <groupId>com.alibaba</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+<!-->-->
+        <!--        <dependency>-->
+<!--            <groupId>net.revelc.code.formatter</groupId>-->
+<!--            <artifactId>jsdt-core</artifactId>-->
+<!--            <version>2.8.6</version>-->
+<!--        </dependency>-->
 
 
     </dependencies>

@@ -1,18 +1,22 @@
 package com.deltaqin.bilibili.redis.jedis;
 
+
 import com.alibaba.fastjson.JSON;
 import com.deltaqin.bilibili.redis.prefix.KeyPrefix;
 import com.deltaqin.bilibili.vo.VideosTopnInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author deltaqin
@@ -30,7 +34,7 @@ public class RedisService {
     public Long setNx(String key, String value) {
         Jedis jedis = null;
         Long result = null;
-        try{
+        try {
             jedis = jedisPool.getResource();
             result = jedis.setnx(key, value);
         } catch (Exception e) {
@@ -60,7 +64,7 @@ public class RedisService {
 
     // class 是关键字
     // 设置返回的类型
-    public  <T>T get(KeyPrefix keyPrefix, String key, Class<T> clazz) {
+    public <T> T get(KeyPrefix keyPrefix, String key, Class<T> clazz) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -73,7 +77,7 @@ public class RedisService {
         }
     }
 
-    public <T>List<T> getList(KeyPrefix keyPrefix, String key, Class<T> clazz) {
+    public <T> List<T> getList(KeyPrefix keyPrefix, String key, Class<T> clazz) {
 
         Jedis jedis = null;
         try {
@@ -88,8 +92,66 @@ public class RedisService {
 
     }
 
+    public <T>List<HashMap<String, T>>  getListWithHashMap(KeyPrefix keyPrefix, String key, T clazz) {
+
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            String realKey = keyPrefix.getPrefix() + key;
+            String res = jedis.get(realKey);
+            List<HashMap<String, T>> maps = toListMap(res);
+            return maps;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+
+    public static <T>List<HashMap<String, T>> toListMap(String json){
+        List<T> list =(List<T>)JSON.parseArray(json);
+
+        List< HashMap<String,T>> listw = new ArrayList<>();
+        for (T object : list){
+            //Map<String,Object> ageMap = new HashMap<>();
+            HashMap <String,T> ret = (HashMap<String, T>) object;//取出list里面的值转为map
+            listw.add(ret);
+        }
+        return listw;
+
+    }
+
+
+    public <T> boolean setListWithHashMap(KeyPrefix keyPrefix, String key , List<HashMap<String, T>> res ) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+
+            String str = JSON.toJSONString(res);
+
+            if (str == null) {
+                return false;
+            }
+
+            // 类名+属性名+key
+            String realKey = keyPrefix.getPrefix() + key;
+            int seconds = keyPrefix.expireSeconds();
+            if (seconds <= 0) {
+                jedis.set(realKey, str);
+            } else {
+                jedis.setex(realKey, seconds, str);
+            }
+            return true;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    //String str = JSON.toJSONString(list); //此行转换
+
+
+
     // 默认返回字符串
-    public  String get(String key) {
+    public String get(String key) {
         Jedis jedis = null;
         String res = null;
         try {
@@ -111,7 +173,7 @@ public class RedisService {
             jedis = jedisPool.getResource();
             String set = jedis.getSet(key, val);
         } catch (Exception exception) {
-            log.error("getset : {} error: {}" , key, exception);
+            log.error("getset : {} error: {}", key, exception);
         } finally {
             returnToPool(jedis);
         }
@@ -152,6 +214,44 @@ public class RedisService {
         }
     }
 
+    //redis-cli --raw keys "ops-coffee-*" | xargs redis-cli del
+    //直接在linux下通过redis的keys命令匹配到所有的key，然后调用系统命令xargs来删除，看似非常完美，实则风险巨大
+
+    // 因为Redis的单线程服务模式，命令keys会阻塞正常的业务请求，如果你一次keys匹配的数量过多或者在del的时候遇到大key，
+    // 都会直接导致业务的不可用，甚至造成redis宕机的风险
+    // 所以我们在生产环境中应当避免使用上边的方法，那有什么优雅的方法来解决呢？SCAN！
+    //  按照模糊匹配批量删除
+    public boolean deleteWithScan(String key) {
+        Jedis jedis = null;
+        String cursor = "0";
+
+        List<String> list = null;
+        try {
+            jedis = jedisPool.getResource();
+            ScanParams params = new ScanParams();
+            params.match(key);
+            params.count(100);
+            while (true) {
+                ScanResult scanResult = jedis.scan(cursor, params);
+                list = scanResult.getResult();
+                if (!CollectionUtils.isEmpty(list)) {
+                    String[] array = list.toArray(new String[0]);
+                    jedis.del(array);
+                }
+                log.info(" 本轮 Scan 查到的待删除数据集是 ============ " + list);
+                cursor = scanResult.getCursor();
+                if ("0".equals(cursor)) {
+                    break;
+                }
+            }
+
+            return true;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+
     public boolean delete(KeyPrefix prefix, String key) {
         Jedis jedis = null;
         try {
@@ -188,7 +288,7 @@ public class RedisService {
 
     public Long delete(String key) {
         Jedis jedis = null;
-        Long res  = null;
+        Long res = null;
         try {
             jedis = jedisPool.getResource();
             res = jedis.del(key);
@@ -235,7 +335,7 @@ public class RedisService {
         }
     }
 
-    public Long incr(KeyPrefix prefix, String key, int count ) {
+    public Long incr(KeyPrefix prefix, String key, int count) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -257,6 +357,7 @@ public class RedisService {
             returnToPool(jedis);
         }
     }
+
     public Long decr(KeyPrefix prefix, String key, int count) {
         Jedis jedis = null;
         try {
@@ -270,9 +371,6 @@ public class RedisService {
     }
 
 
-
-
-
     // 注意泛型的写法
     private <T> String beanToStr(T val) {
         if (val == null) return null;
@@ -280,7 +378,7 @@ public class RedisService {
         if (clazz == int.class || clazz == Integer.class) {
             return "" + val;
         } else if (clazz == String.class) {
-            return (String)val;
+            return (String) val;
         } else if (clazz == Long.class || clazz == long.class) {
             return "" + val;
         } else {
@@ -292,17 +390,17 @@ public class RedisService {
     private <T> T strToBean(String res, Class<T> clazz) {
         if (res == null || res.length() <= 0 || clazz == null) return null;
         if (clazz == int.class || clazz == Integer.class) {
-            return (T)Integer.valueOf(res);
+            return (T) Integer.valueOf(res);
         } else if (clazz == String.class) {
-            return (T)res;
+            return (T) res;
         } else if (clazz == long.class || clazz == Long.class) {
-            return (T)Long.valueOf(res);
-        }  else {
-             return JSON.toJavaObject(JSON.parseObject(res), clazz);
+            return (T) Long.valueOf(res);
+        } else {
+            return JSON.toJavaObject(JSON.parseObject(res), clazz);
         }
     }
 
-    private <T>List<T> strToBeanList(String res, Class<T> clazz) {
+    private <T> List<T> strToBeanList(String res, Class<T> clazz) {
         return (ArrayList<T>) JSON.parseArray(res, VideosTopnInfoVo.class);
     }
 

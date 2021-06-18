@@ -1,12 +1,8 @@
 package com.deltaqin.bilibili.controller;
 
 import com.deltaqin.bilibili.common.entities.ResultType;
-import com.deltaqin.bilibili.dataobject.VideosTopnInfo;
-import com.deltaqin.bilibili.model.Top5ThreeModel;
 import com.deltaqin.bilibili.model.VideosTopnInfoModel;
-import com.deltaqin.bilibili.redis.prefix.BaseKeyPrefix;
-import com.deltaqin.bilibili.redis.prefix.KeyPrefix;
-import com.deltaqin.bilibili.redis.prefix.VideoKeyPrefix;
+import com.deltaqin.bilibili.redis.prefix.AllKeyPrefix;
 import com.deltaqin.bilibili.service.C01_ZhuYeService;
 import com.deltaqin.bilibili.vo.VideosTopnInfoVo;
 import io.swagger.annotations.Api;
@@ -19,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.security.interfaces.DSAPublicKey;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 /**
  * @author deltaqin
@@ -78,12 +74,11 @@ public class C01_ZhuYeChartController extends BaseController {
     @ApiOperation(value = "（6） Top5视频的分区三连数据（条形）  [video_info]", notes = "")
     @RequestMapping(value = "/video/top5data", method = RequestMethod.GET)
     public ResultType getTop5ThreeLian() {
-        //List<VideosTopnInfoVo> res = null;
         List<HashMap<String,Object>>  res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getVideoTypeInfo, "getTop5ThreeLian", Object.class);
         if (res == null){
             res = zhuYeService.getTop5Three();
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            redisService.setListWithHashMap(AllKeyPrefix.getVideoTypeInfo, "getTop5ThreeLian", res);
         }
         return ResultType.create(res);
     }
@@ -91,13 +86,8 @@ public class C01_ZhuYeChartController extends BaseController {
     @ApiOperation(value = "（7） 全站分区热度占比（饼状图） ", notes = "")
     @RequestMapping(value = "/video/allhot", method = RequestMethod.GET)
     public ResultType getAllHot() {
-        //List<VideosTopnInfoVo> res = null;
         List<HashMap<String, Double>>  res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
-        if (res == null){
-            res = zhuYeService.getAllHot();
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
-        }
+        res = zhuYeService.getAllHot();
         return ResultType.create(res);
     }
 
@@ -105,12 +95,11 @@ public class C01_ZhuYeChartController extends BaseController {
     @ApiOperation(value = "（8） 全站Top20视频排行（列表）\n", notes = "")
     @RequestMapping(value = "/video/VideoTop20", method = RequestMethod.GET)
     public ResultType getVideoTop20() {
-        //List<VideosTopnInfoVo> res = null;
         List<HashMap<String, Object>>  res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getVideoTop20", Object.class);
         if (res == null){
             res = zhuYeService.getVideoTop20();
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            redisService.setListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getVideoTop20", res);
         }
         return ResultType.create(res);
     }
@@ -119,12 +108,11 @@ public class C01_ZhuYeChartController extends BaseController {
     @ApiOperation(value = "（9） 全站Top20专栏排行（列表） ", notes = "")
     @RequestMapping(value = "/video/zhaunlantop20", method = RequestMethod.GET)
     public ResultType getZhuanlanTop20() {
-        //List<VideosTopnInfoVo> res = null;
         List<HashMap<String, Object>>  res = null;
-        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getZhuanlanTop20", Object.class);
         if (res == null){
             res = zhuYeService.getZhuanlanTop20();
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            redisService.setListWithHashMap(AllKeyPrefix.getVideosTopnInfo, "getZhuanlanTop20", res);
         }
         return ResultType.create(res);
     }

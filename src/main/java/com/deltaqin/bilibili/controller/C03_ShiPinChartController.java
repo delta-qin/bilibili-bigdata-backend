@@ -1,7 +1,6 @@
 package com.deltaqin.bilibili.controller;
 
 import com.deltaqin.bilibili.common.entities.ResultType;
-import com.deltaqin.bilibili.redis.prefix.VideoKeyPrefix;
 import com.deltaqin.bilibili.service.C03_ShiPinChartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,7 +34,7 @@ public class C03_ShiPinChartController extends BaseController{
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = shiPinChartService.getFenqu7Day(tid);
-            redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
+            //redisService.set(VideoTypeInfoKeyPrefix.getHome, VideoTypeInfoKeyPrefix.GET_TOP5_THREE, res);
         }
         return ResultType.create(res);
     }

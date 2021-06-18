@@ -5,22 +5,15 @@ import com.deltaqin.bilibili.dao.ColumnsInfoMapper;
 import com.deltaqin.bilibili.dao.ColumnsTopnInfoMapper;
 import com.deltaqin.bilibili.dao.VideosInfoMapper;
 import com.deltaqin.bilibili.dao.VideosTopnInfoMapper;
-import com.deltaqin.bilibili.dataobject.ColumnsTopnInfo;
-import com.deltaqin.bilibili.dataobject.VideosInfo;
 import com.deltaqin.bilibili.dataobject.VideosTopnInfo;
-import com.deltaqin.bilibili.model.Top5ThreeModel;
 import com.deltaqin.bilibili.model.VideosTopnInfoModel;
-import com.deltaqin.bilibili.redis.prefix.VideoKeyPrefix;
 import com.deltaqin.bilibili.service.C01_ZhuYeService;
-import com.deltaqin.bilibili.vo.VideosTopnInfoVo;
-import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author deltaqin
