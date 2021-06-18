@@ -45,4 +45,6 @@ public interface VideosInfoMapper {
     HashMap<String, Long> getFenquLeiDa(Integer tid);
 
     List<HashMap<String, Long>> getFenqu7Day(@Param("tid") Integer tid);
+
+    List<HashMap<String, Object>> getFenquAllToday();
 }

@@ -232,15 +232,7 @@
     on a.cid = b.id
     GROUP By a.cid,b.name
   </select>
-  <select id="getFenquAllToday" resultType="java.util.HashMap">
 
-    SELECT a.*, b.`name` as `name`
-      FROM columns_info a
-    INNER JOIN
-      column_type_info as b
-      on a.cid = b.id
-    WHERE CURDATE() = date(publish_time)
-  </select>
   <update id="updateByExampleSelective" parameterType="map">
     update columns_info
     <set>
