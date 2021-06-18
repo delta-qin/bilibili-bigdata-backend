@@ -5,6 +5,7 @@ import com.deltaqin.bilibili.dataobject.ColumnsInfoExample;
 
 import java.util.HashMap;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ColumnsInfoMapper {
@@ -36,7 +37,7 @@ public interface ColumnsInfoMapper {
 
     Long getSelectZhuanLanTotal(@Param("tid") Integer tid);
 
-    List<HashMap<String,Object>> getZhuanLanNew7day(@Param("tid") Integer tid);
+    List<HashMap<String, Object>> getZhuanLanNew7day(@Param("tid") Integer tid);
 
     List<HashMap<String, Object>> getFenquAllNum();
 }

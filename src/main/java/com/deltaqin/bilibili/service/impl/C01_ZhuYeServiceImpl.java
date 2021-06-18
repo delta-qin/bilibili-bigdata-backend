@@ -35,27 +35,34 @@ public class C01_ZhuYeServiceImpl implements C01_ZhuYeService {
     private ColumnsTopnInfoMapper columnsTopnInfoMapper;
 
     @Override
-    public List<HashMap<String,Object>>  getTop5Three() {
-        List<HashMap<String,Object>> list = videosInfoMapper.selectTop5Three();
+    public List<HashMap<String, Object>> getTop5Three() {
+        List<HashMap<String, Object>> list = videosInfoMapper.selectTop5Three();
 
-        List<HashMap<String,Object>> hashMaps = videosTopnInfoMapper.selectTypeCount();
+        List<HashMap<String, Object>> hashMaps = videosTopnInfoMapper.selectTypeCount();
         HashMap<String, Long> hashMap = new HashMap<>();
-        for(HashMap<String,Object> map:hashMaps){
-            hashMap.put((String) map.get("name"),(Long)map.get("count"));
+        for (HashMap<String, Object> map : hashMaps) {
+            hashMap.put((String) map.get("name"), (Long) map.get("count"));
         }
 
         list.forEach(item -> {
-            BigDecimal view = (BigDecimal)item.get("view");
+            BigDecimal view = (BigDecimal) item.get("view");
             view = view.multiply(new BigDecimal("0.2"));
-            BigDecimal like = (BigDecimal)item.get("like");
+            BigDecimal like = (BigDecimal) item.get("like");
             like = like.multiply(new BigDecimal("0.3"));
-            BigDecimal coin = (BigDecimal)item.get("coin");
+            BigDecimal coin = (BigDecimal) item.get("coin");
             coin = coin.multiply(new BigDecimal("0.5"));
-            double score = view.add(like).add(coin).longValue()/(double)hashMap.get(item.get("name"));
-            item.put("score",DoubleUtil.userBigDecimal(score));
+            double score = view.add(like).add(coin).longValue() / (double) hashMap.get(item.get("name"));
+            item.put("score", DoubleUtil.userBigDecimal(score));
         });
 
-        return list;
+        list.sort(new Comparator<HashMap<String, Object>>() {
+            @Override
+            public int compare(HashMap<String, Object> o1, HashMap<String, Object> o2) {
+                return (int)((double) o2.get("score") - (double) o1.get("score"));
+            }
+        });
+
+        return list.subList(0,5);
     }
 
     @Override
@@ -80,13 +87,13 @@ public class C01_ZhuYeServiceImpl implements C01_ZhuYeService {
     }
 
     @Override
-    public List<HashMap<String, Double>>  getAllHot() {
+    public List<HashMap<String, Double>> getAllHot() {
         return videosInfoMapper.getAllHot();
     }
 
     @Override
     public List<HashMap<String, Object>> getVideoTop20() {
-        return  videosTopnInfoMapper.getVideoTop20();
+        return videosTopnInfoMapper.getVideoTop20();
     }
 
     @Override

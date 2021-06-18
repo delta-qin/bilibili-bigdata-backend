@@ -75,8 +75,9 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, tid, count, view, danmaku, reply, like, dislike, coin, share, pubdate
-  </sql>
+        id
+        , tid, count, view, danmaku, reply, like, dislike, coin, share, pubdate
+    </sql>
     <select id="selectByExample" parameterType="com.deltaqin.bilibili.dataobject.VideosInfoExample"
             resultMap="BaseResultMap">
         select
@@ -99,9 +100,10 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from videos_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete
+        from videos_info
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     <delete id="deleteByExample" parameterType="com.deltaqin.bilibili.dataobject.VideosInfoExample">
         delete from videos_info
         <if test="_parameter != null">
@@ -199,59 +201,56 @@
         </if>
     </select>
     <select id="getVideoTotal" resultType="java.lang.Long">
-      SELECT SUM(`count`) as total
-      FROM videos_info
+        SELECT SUM(`count`) as total
+        FROM videos_info
     </select>
     <select id="getVideoNewIn14Day" resultType="java.lang.Long">
-    SELECT SUM(`count`) as total
-    FROM videos_info where DATE_SUB(CURDATE(), INTERVAL 14 DAY) <![CDATA[<=]]> date(pubdate)
-  </select>
+        SELECT SUM(`count`) as total
+        FROM videos_info
+        where DATE_SUB(CURDATE(), INTERVAL 14 DAY) <![CDATA[<=]]> date (pubdate)
+    </select>
 
     <select id="selectTop5Three" resultType="java.util.HashMap">
-      SELECT  b.name as name, SUM(a.`like`) as `like`, SUM(a.coin) as coin, SUM(a.`view`) as `view`
-      from videos_info as a
-      INNER JOIN
-      video_type_info as b
-      on a.tid = b.id
-      GROUP BY a.tid
+        SELECT b.name as name, SUM(a.`like`) as `like`, SUM(a.coin) as coin, SUM(a.`view`) as `view`
+        from videos_info as a
+                 INNER JOIN
+             video_type_info as b
+             on a.tid = b.id
+        GROUP BY a.tid
     </select>
 
     <select id="getAllsum" resultType="java.util.HashMap">
-  SELECT
-      SUM(`like`) as `like`,
-      SUM(`coin`) as coin,
-      SUM(`danmaku`) as danmaku,
-      SUM(`reply`) as reply,
-      SUM(`view`) as `view`
-  FROM videos_info
-  </select>
+        SELECT SUM(`like`)    as `like`,
+               SUM(`coin`)    as coin,
+               SUM(`danmaku`) as danmaku,
+               SUM(`reply`)   as reply,
+               SUM(`view`)    as `view`
+        FROM videos_info
+    </select>
     <select id="getAllHot" resultType="java.util.HashMap">
 
-        SELECT  b.name as name, SUM(a.`like`) * 0.3 + SUM(a.coin) *0.5 + SUM(a.`view`) * 0.2 as score
+        SELECT b.name as name, SUM(a.`like`) * 0.3 + SUM(a.coin) * 0.5 + SUM(a.`view`) * 0.2 as score
         from videos_info as a
-        INNER JOIN
-        video_type_info as b
-        on a.tid = b.id
-        GROUP By a.tid,b.name
+                 INNER JOIN
+             video_type_info as b
+             on a.tid = b.id
+        GROUP By a.tid, b.name
 
     </select>
     <select id="getFenquLeiDa" resultType="java.util.HashMap">
-
-SELECT
-	SUM(`like`) as `like`,
-	SUM(`coin`) as coin,
-	SUM(`danmaku`) as danmaku,
-	SUM(`reply`) as reply,
-	SUM(`view`) as `view`
-FROM videos_info
-WHERE tid = #{tid}
+        SELECT SUM(`like`)    as `like`,
+               SUM(`coin`)    as coin,
+               SUM(`danmaku`) as danmaku,
+               SUM(`reply`)   as reply,
+               SUM(`view`)    as `view`
+        FROM videos_info
+        WHERE tid = #{tid}
     </select>
     <select id="getFenqu7Day" resultType="java.util.HashMap">
         SELECT pubdate, `count`
         FROM videos_info
-        where tid =#{tid}
-        ORDER BY pubdate DESC
-        LIMIT 0,7
+        where tid = #{tid}
+        ORDER BY pubdate DESC LIMIT 0,7
     </select>
     <select id="getFenquAllToday" resultType="java.util.HashMap">
         SELECT a.*, b.`name` as `name`
@@ -260,11 +259,10 @@ WHERE tid = #{tid}
             video_type_info as b
             on a.tid = b.id)
                  INNER JOIN (
-            SELECT MAX(pubdate) as pubdate,tid
+            SELECT MAX(pubdate) as pubdate, tid
             FROM videos_info
             GROUP BY tid
-            ) as c
-            on a.pubdate = c.pubdate AND a.tid = c.tid
+        ) as c on a.pubdate = c.pubdate AND a.tid = c.tid
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update videos_info
@@ -361,17 +359,17 @@ WHERE tid = #{tid}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.deltaqin.bilibili.dataobject.VideosInfo">
-    update videos_info
-    set tid = #{tid,jdbcType=INTEGER},
-      count = #{count,jdbcType=INTEGER},
-      view = #{view,jdbcType=BIGINT},
-      danmaku = #{danmaku,jdbcType=BIGINT},
-      reply = #{reply,jdbcType=BIGINT},
-      like = #{like,jdbcType=BIGINT},
-      dislike = #{dislike,jdbcType=BIGINT},
-      coin = #{coin,jdbcType=BIGINT},
-      share = #{share,jdbcType=BIGINT},
-      pubdate = #{pubdate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        update videos_info
+        set tid     = #{tid,jdbcType=INTEGER},
+            count   = #{count,jdbcType=INTEGER},
+            view    = #{view,jdbcType=BIGINT},
+            danmaku = #{danmaku,jdbcType=BIGINT},
+            reply   = #{reply,jdbcType=BIGINT},
+            like    = #{like,jdbcType=BIGINT},
+            dislike = #{dislike,jdbcType=BIGINT},
+            coin    = #{coin,jdbcType=BIGINT},
+            share   = #{share,jdbcType=BIGINT},
+            pubdate = #{pubdate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

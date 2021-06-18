@@ -38,7 +38,7 @@ public interface VideosInfoMapper {
 
     HashMap<String, Long> getAllsum();
 
-    List<HashMap<String,Object>> selectTop5Three();
+    List<HashMap<String, Object>> selectTop5Three();
 
     List<HashMap<String, Double>> getAllHot();
 

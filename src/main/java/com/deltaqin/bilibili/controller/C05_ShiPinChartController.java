@@ -35,7 +35,7 @@ public class C05_ShiPinChartController extends BaseController{
     public ResultType getFenquAllToday() {
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String,Object>> res = null;
-        res = redisService.getListWithHashMap(AllKeyPrefix.getColumnsInfo,  AllKeyPrefix.getColumnTypeInfo.getPrefix()+"allnum", Object.class);
+        //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = shiPinChartService.getFenquAllToday();
             redisService.setListWithHashMap(AllKeyPrefix.getColumnsInfo,  AllKeyPrefix.getColumnTypeInfo.getPrefix()+"allnum", res);
