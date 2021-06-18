@@ -38,11 +38,11 @@ public interface VideosInfoMapper {
 
     HashMap<String, Long> getAllsum();
 
-    List<VideosTopnInfo> selectTop5Three();
+    List<HashMap<String,Object>> selectTop5Three();
 
     List<HashMap<String, Double>> getAllHot();
 
     HashMap<String, Long> getFenquLeiDa(Integer tid);
 
-    HashMap<String, Long> getFenqu7Day(@Param("tid") Integer tid);
+    List<HashMap<String, Long>> getFenqu7Day(@Param("tid") Integer tid);
 }

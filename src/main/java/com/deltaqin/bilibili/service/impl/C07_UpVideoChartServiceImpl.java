@@ -32,7 +32,8 @@ public class C07_UpVideoChartServiceImpl implements C07_UpVideoChartService {
         Long allviedo = getHundredAllviedo();
 
         for (HashMap<String, Object> map:hundredPercent)  {
-            map.put("count", DoubleUtil.userBigDecimal(((Double)map.get("count"))/allviedo));
+            //map.put("count", DoubleUtil.userBigDecimal((new Double((long)map.get("count")).doubleValue())/allviedo));
+            map.put("count", new Double((long)map.get("count")).doubleValue()/allviedo);
         }
 
         return hundredPercent;

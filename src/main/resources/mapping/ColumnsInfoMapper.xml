@@ -214,12 +214,13 @@
   <select id="getNewIn14Day" resultType="java.lang.Long">
     SELECT SUM(`count`) as total
     FROM columns_info
-    where DATE_SUB(CURDATE(), INTERVAL 10 DAY) lt;= date(publish_time)
-  </select>
+    where DATE_SUB(CURDATE(), INTERVAL 10 DAY) <![CDATA[<=]]>
+    date(publish_time)
+</select>
   <select id="getZhuanLanNew7day" resultType="java.util.HashMap">
     SELECT publish_time, `count`
     FROM columns_info
-    where DATE_SUB(CURDATE(), INTERVAL 7 DAY) lt;= date(publish_time)
+    where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[<=]]> date(publish_time)
     AND cid = #{tid}
     ORDER BY publish_time
   </select>

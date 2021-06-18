@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author deltaqin
@@ -30,7 +31,7 @@ public class C03_ShiPinChartController extends BaseController{
     @RequestMapping(value = "/video/fenqu/7day", method = RequestMethod.GET)
     public ResultType getFenqu7Day(@RequestParam Integer tid) {
         //List<VideosTopnInfoVo> res = null;
-        HashMap<String, Long> res = null;
+        List<HashMap<String, Long>> res = null;
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = shiPinChartService.getFenqu7Day(tid);

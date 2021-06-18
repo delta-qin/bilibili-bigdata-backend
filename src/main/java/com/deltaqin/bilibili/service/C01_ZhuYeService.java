@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2021/6/17 下午1:34
  */
 public interface C01_ZhuYeService {
-    List<Top5ThreeModel> getTop5Three();
+    List<HashMap<String,Object>>  getTop5Three();
 
     Long getVideoNewIn14Day();
 

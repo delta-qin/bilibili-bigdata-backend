@@ -204,18 +204,16 @@
     </select>
     <select id="getVideoNewIn14Day" resultType="java.lang.Long">
     SELECT SUM(`count`) as total
-    FROM videos_info where DATE_SUB(CURDATE(), INTERVAL 14 DAY) lt;= date(pubdate)
+    FROM videos_info where DATE_SUB(CURDATE(), INTERVAL 14 DAY) <![CDATA[<=]]> date(pubdate)
   </select>
 
-    <select id="selectTop5Three" resultType="com.deltaqin.bilibili.dataobject.VideosTopnInfo">
-
-
-      SELECT  b.name as name, a.`like` as `like`, a.coin as coin, a.`view` as `view`
+    <select id="selectTop5Three" resultType="java.util.HashMap">
+      SELECT  b.name as name, SUM(a.`like`) as `like`, SUM(a.coin) as coin, SUM(a.`view`) as `view`
       from videos_info as a
       INNER JOIN
       video_type_info as b
       on a.tid = b.id
-
+      GROUP BY a.tid
     </select>
 
     <select id="getAllsum" resultType="java.util.HashMap">
@@ -251,7 +249,7 @@ WHERE tid = #{tid}
     <select id="getFenqu7Day" resultType="java.util.HashMap">
         SELECT pubdate, `count`
         FROM videos_info
-        where DATE_SUB(CURDATE(), INTERVAL 7 DAY) lt;= date(pubdate)
+        where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[<=]]> date(pubdate)
         AND tid =#{tid}
         ORDER BY pubdate
     </select>

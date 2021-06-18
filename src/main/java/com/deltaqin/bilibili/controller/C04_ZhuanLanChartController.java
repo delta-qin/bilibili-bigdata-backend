@@ -51,6 +51,9 @@ public class C04_ZhuanLanChartController extends BaseController{
             res = zhuanLanChartService.getZhuanLantotal(tid);
             redisService.set(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, res);
         }
+        if (res == null) {
+
+        }
         return ResultType.create(res);
     }
 

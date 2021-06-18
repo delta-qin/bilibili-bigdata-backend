@@ -30,7 +30,8 @@ public class C04_ZhuanLanChartServiceImpl implements C04_ZhuanLanChartService {
 
     @Override
     public Long getZhuanLantotal(Integer tid) {
-        return columnsInfoMapper.getSelectZhuanLanTotal(tid);
+        Long total = columnsInfoMapper.getSelectZhuanLanTotal(tid);
+        return total == null ? 0 : total;
     }
 
     @Override

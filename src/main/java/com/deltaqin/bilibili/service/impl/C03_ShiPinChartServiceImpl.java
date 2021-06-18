@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author deltaqin
@@ -17,9 +18,9 @@ public class C03_ShiPinChartServiceImpl implements C03_ShiPinChartService {
     @Autowired
     private VideosInfoMapper videosInfoMapper;
     @Override
-    public HashMap<String, Long> getFenqu7Day(Integer tid) {
-        HashMap<String, Long> fenqu7Day = videosInfoMapper.getFenqu7Day(tid);
-        return fenqu7Day;
+    public List<HashMap<String, Long>> getFenqu7Day(Integer tid) {
+        return  videosInfoMapper.getFenqu7Day(tid);
+
 
     }
 }

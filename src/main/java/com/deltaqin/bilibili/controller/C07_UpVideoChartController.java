@@ -6,7 +6,6 @@ import com.deltaqin.bilibili.service.C07_UpVideoChartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,7 +53,6 @@ public class C07_UpVideoChartController extends BaseController{
         return ResultType.create(res);
     }
 
-
     @ApiOperation(value = "（3）百大中前topN播放量的视频      [baida_video_topN] (表单) ", notes = "")
     @RequestMapping(value = "/up/hundred/topN", method = RequestMethod.GET)
     public ResultType getHundredTopN(@RequestParam Integer N) {
@@ -67,7 +65,4 @@ public class C07_UpVideoChartController extends BaseController{
         }
         return ResultType.create(res);
     }
-
-
-
 }

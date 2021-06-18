@@ -79,7 +79,7 @@ public class C01_ZhuYeChartController extends BaseController {
     @RequestMapping(value = "/video/top5data", method = RequestMethod.GET)
     public ResultType getTop5ThreeLian() {
         //List<VideosTopnInfoVo> res = null;
-        List<Top5ThreeModel> res = null;
+        List<HashMap<String,Object>>  res = null;
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
         if (res == null){
             res = zhuYeService.getTop5Three();

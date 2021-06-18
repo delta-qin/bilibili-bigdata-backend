@@ -6,6 +6,7 @@ import com.deltaqin.bilibili.dao.ColumnsTopnInfoMapper;
 import com.deltaqin.bilibili.dao.VideosInfoMapper;
 import com.deltaqin.bilibili.dao.VideosTopnInfoMapper;
 import com.deltaqin.bilibili.dataobject.ColumnsTopnInfo;
+import com.deltaqin.bilibili.dataobject.VideosInfo;
 import com.deltaqin.bilibili.dataobject.VideosTopnInfo;
 import com.deltaqin.bilibili.model.Top5ThreeModel;
 import com.deltaqin.bilibili.model.VideosTopnInfoModel;
@@ -17,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,21 +42,8 @@ public class C01_ZhuYeServiceImpl implements C01_ZhuYeService {
     private ColumnsTopnInfoMapper columnsTopnInfoMapper;
 
     @Override
-    public List<Top5ThreeModel> getTop5Three() {
-        List<VideosTopnInfo> list = videosInfoMapper.selectTop5Three();
-        HashMap<String, Double> res = new HashMap<>();
-
-        list.forEach(item -> {
-            Double count = item.getLike() * 0.2 + item.getCoin() * 0.3 + item.getFavorite() * 0.5;
-            Double tmp = res.get(item.getName());
-            if (tmp == null) {
-                res.put(item.getName(), count);
-            } else {
-                res.put(item.getName(), count + tmp );
-            }
-        });
-
-
+    public List<HashMap<String,Object>>  getTop5Three() {
+        List<HashMap<String,Object>> list = videosInfoMapper.selectTop5Three();
 
         List<HashMap<String,Object>> hashMaps = videosTopnInfoMapper.selectTypeCount();
         HashMap<String, Long> hashMap = new HashMap<>();
@@ -62,21 +51,18 @@ public class C01_ZhuYeServiceImpl implements C01_ZhuYeService {
             hashMap.put((String) map.get("name"),(Long)map.get("count"));
         }
 
-        List<Top5ThreeModel> res1 = new ArrayList();
-        res.forEach((k, v) -> {
-            Top5ThreeModel top5ThreeModel = new Top5ThreeModel();
-            top5ThreeModel.setName(k);
-            Long count = hashMap.get(k);
-            top5ThreeModel.setScore(DoubleUtil.userBigDecimal(v/count));
-            res1.add(top5ThreeModel);
+        list.forEach(item -> {
+            BigDecimal view = (BigDecimal)item.get("view");
+            view = view.multiply(new BigDecimal("0.2"));
+            BigDecimal like = (BigDecimal)item.get("like");
+            like = like.multiply(new BigDecimal("0.3"));
+            BigDecimal coin = (BigDecimal)item.get("coin");
+            coin = coin.multiply(new BigDecimal("0.5"));
+            double score = view.add(like).add(coin).longValue()/(double)hashMap.get(item.get("name"));
+            item.put("score",DoubleUtil.userBigDecimal(score));
         });
 
-        List<Top5ThreeModel> list1 = res1.stream().sorted().collect(Collectors.toList());
-
-        //res1.sort((o1, o2)->{
-        //    return new Double(o2.getScore() - o1.getScore()).intValue();
-        //});
-        return list1;
+        return list;
     }
 
     @Override

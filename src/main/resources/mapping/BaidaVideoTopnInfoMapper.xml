@@ -235,9 +235,9 @@
     FROM baida_video_topn_info
   </select>
   <select id="getHundredPercent" resultType="java.util.HashMap">
-    SELECT count(aid) as `count`, author, mid
+SELECT count(id) as `count`, mid,   author
 FROM baida_video_topn_info
-GROUP BY (mid)
+GROUP BY mid,   author
   </select>
   <select id="getHundredTopN" resultType="java.util.HashMap">
     SELECT *
