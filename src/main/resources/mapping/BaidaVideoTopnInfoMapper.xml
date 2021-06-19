@@ -247,7 +247,7 @@
     <select id="getHundredTopN" resultType="java.util.HashMap">
         SELECT *
         FROM baida_video_topn_info
-        ORDER BY play
+        ORDER BY play DESC
         LIMIT #{n}
     </select>
     <update id="updateByExampleSelective" parameterType="map">

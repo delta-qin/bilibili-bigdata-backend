@@ -59,10 +59,10 @@ public class C04_ZhuanLanChartController extends BaseController{
         //List<VideosTopnInfoVo> res = null;
         List<HashMap<String,Object>>  res = null;
         //res = redisService.getList(VideoKeyPrefix.getHome, VideoKeyPrefix.GET_TOP5_THREE, Top5ThreeModel.class);
-        res = redisService.getListWithHashMap(AllKeyPrefix.getColumnsInfo, "getZhuanLanNew7day" , Object.class);
+        res = redisService.getListWithHashMap(AllKeyPrefix.getColumnsInfo, "getZhuanLanNew7day" + tid , Object.class);
         if (res == null){
             res = zhuanLanChartService.getZhuanLanNew7day(tid);
-            redisService.setListWithHashMap(AllKeyPrefix.getColumnsInfo, "getZhuanLanNew7day" , res);
+            redisService.setListWithHashMap(AllKeyPrefix.getColumnsInfo, "getZhuanLanNew7day" + tid, res);
         }
         return ResultType.create(res);
     }
